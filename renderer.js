@@ -21,16 +21,18 @@ router.use(function(req, res, next) {
 http.createServer(expressapp).listen(3000);
 
 function startdb(){
-    var name = document.getElementById('src');
+
+	var code = document.getElementById("iframecode").contentWindow['code'];
+    var name = document.getElementById('nameofcode');
     console.log(name.value);
     MongoClient.connect('mongodb://localhost/source',function(err,db) {
-        var src = document.getElementById('src');
+        var src = document.getElementById('source');
         var name = document.getElementById('nameofcode');
         console.log("start db");
         var insertDocument = function(db, callback){
             db.collection('codes').insertOne({
                 "name" : name.value,
-                "source" : src.value
+                "source" : code
             },function(err, result){
                 console.log("Inserted a document into logs collection.");
                 callback();
